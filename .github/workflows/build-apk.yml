@@ -30,11 +30,31 @@ jobs:
       - name: Build release APK
         run: ./gradlew app:assembleRelease --stacktrace --no-daemon
 
-      - name: List APK
-        run: ls -lh app/build/outputs/apk/release/
+      - name: Sign APK with release keystore
+        uses: akliuxingyuan/sign-android-release@v2.0.1
+        with:
+          releaseDir: app/build/outputs/apk/release/
+          signingKey: ${{ secrets.RELEASE_KEYSTORE }}
+          keyAlias: ${{ secrets.RELEASE_KEY_ALIAS }}
+          keyStorePassword: ${{ secrets.RELEASE_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.RELEASE_KEY_PASSWORD }}
 
-      - name: Upload unsigned APK
+      - name: Verify APK signature
+        run: |
+          ls -lh app/build/outputs/apk/release/
+          APKSIGNER=$(find "$ANDROID_SDK_ROOT" /usr/local/lib/android /opt/android-sdk "$HOME/android-sdk" -path "*/build-tools/*/apksigner" -type f 2>/dev/null | head -n 1)
+          if [ -z "$APKSIGNER" ]; then
+            echo "apksigner not found, installing build-tools via sdkmanager"
+            SDK=$(find "$ANDROID_SDK_ROOT" /usr/local/lib/android /opt/android-sdk "$HOME/android-sdk" -maxdepth 1 -type d -name "*sdk*" 2>/dev/null | head -n 1)
+            "$SDK/cmdline-tools/latest/bin/sdkmanager" "build-tools;35.0.0"
+            APKSIGNER=$(find "$SDK" -path "*/build-tools/*/apksigner" -type f 2>/dev/null | head -n 1)
+          fi
+          echo "apksigner: $APKSIGNER"
+          test -n "$APKSIGNER"
+          "$APKSIGNER" verify --print-certs app/build/outputs/apk/release/app-release.apk
+
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
-          name: webmail-1.0.0-release-unsigned
-          path: app/build/outputs/apk/release/app-release-unsigned.apk
+          name: webmail-1.0.0-release.apk
+          path: app/build/outputs/apk/release/app-release.apk
