@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 启动图标前景：白色信封（自适应图标，背景见 mipmap-anydpi-v26） -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M81,32H27c-2.76,0 -5,2.24 -5,5v38c0,2.76 2.24,5 5,5h54c2.76,0 5,-2.24 5,-5V37c0,-2.76 -2.24,-5 -5,-5zM81,42L54,59 27,42v-5l27,17 27,-17v5z" />
+</vector>

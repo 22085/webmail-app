@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "288565565643",
+    "project_id": "sshdog-webmail",
+    "storage_bucket": "sshdog-webmail.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:288565565643:android:66a7ae71fa613da129634e",
+        "android_client_info": {
+          "package_name": "com.sshdog.webmail"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCvbhjXk5r9-z7z_Wodngkc87BKWopOOZQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
